@@ -4,7 +4,6 @@ import com.example.demo.product.Product;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -43,23 +42,23 @@ public class ProductService {
         }
     }
 
-    @Transactional
-    public Product updateProduct(Long id,String name, Integer quantity, Integer price) {
+    public Product updateProduct(Long id, Product product) {
         boolean check = this.productRepository.existsById(id);
         if(!check){
             throw new IllegalStateException("Product does not exist!");
         }else{
-            Product product = (Product)this.productRepository.findById(id).get();
-            if(name != null && name.length() > 0 && !Objects.equals(product.getName(),name)){
-                product.setName(name);
+            Product uProduct = this.productRepository.findById(id).get();
+            if(Objects.nonNull(product.getName()) && product.getName().length() > 0 && !Objects.equals(product.getName(),uProduct.getName())){
+                uProduct.setName(product.getName());
             }
-            if(quantity != null && quantity > 0){
-                product.setQuantity(quantity);
+            if(Objects.nonNull(product.getQuantity()) && product.getQuantity() > 0){
+                uProduct.setQuantity(product.getQuantity());
             }
-            if(price != null && price > 0){
-                product.setPrice(price);
+            if(Objects.nonNull(product.getPrice()) && product.getPrice() > 0){
+                uProduct.setPrice(product.getPrice());
             }
-            return product;
+            this.productRepository.save(uProduct);
+            return uProduct;
         }
     }
 }
