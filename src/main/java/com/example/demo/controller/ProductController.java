@@ -28,12 +28,12 @@ public class ProductController {
         return productService.createProduct(product);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(path = {"/{id}"})
     public void deleteProduct(@PathVariable Long id){
         this.productService.deleteProduct(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = {"/{id}"})
     public Product updateProduct(@PathVariable Long id,@RequestParam(required = false) String name, @RequestParam(required = false) Integer quantity, @RequestParam(required = false) Integer price){
         return this.productService.updateProduct(id,name,quantity,price);
     }

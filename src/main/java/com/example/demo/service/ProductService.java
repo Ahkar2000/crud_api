@@ -4,6 +4,7 @@ import com.example.demo.product.Product;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -42,12 +43,13 @@ public class ProductService {
         }
     }
 
+    @Transactional
     public Product updateProduct(Long id,String name, Integer quantity, Integer price) {
         boolean check = this.productRepository.existsById(id);
         if(!check){
             throw new IllegalStateException("Product does not exist!");
         }else{
-            Product product = (Product) this.productRepository.findById(id).get();
+            Product product = (Product)this.productRepository.findById(id).get();
             if(name != null && name.length() > 0 && !Objects.equals(product.getName(),name)){
                 product.setName(name);
             }
