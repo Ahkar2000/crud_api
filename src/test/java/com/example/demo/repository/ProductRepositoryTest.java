@@ -23,7 +23,6 @@ public class ProductRepositoryTest {
     @BeforeEach
     public void setUp() {
         Product product = new Product();
-        product.setId(1L);
         product.setName("test");
         product.setPrice(1000);
         product.setQuantity(10);

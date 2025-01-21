@@ -110,7 +110,7 @@ public class ProductControllerIntegrationTest {
                 String.class);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue(), "Status code mismatch");
-        Assertions.assertEquals("", response.getBody(), "product should be null");
+        Assertions.assertEquals(null, response.getBody(), "product should be null");
     }
 
     @Test
